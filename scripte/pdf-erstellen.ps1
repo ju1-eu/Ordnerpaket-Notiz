@@ -63,7 +63,7 @@ latexmk -pdf artikel.tex
 
 # LaTeX - pdflatex
 # Usereingabe
-"+++ Book erstellen ?"
+"+++ Book & Print erstellen ?"
 $var = Read-Host 'Eingabe - [j/n]' 
 if($var -eq  "n"){# gleich
   "PS-Script .\scripte\pdf-erstellen.ps1 wird beendet"
