@@ -1,0 +1,72 @@
+# wordpress
+
+## links auf seiten
+
+http://localhost/wordpress
+
+<li><a href="http://localhost/wordpress/Git-Schnellstart">Git-Schnellstart</a></li>
+<li><a href="http://localhost/wordpress/Markdown">Markdown</a></li>
+<li><a href="http://localhost/wordpress/Readme">Readme</a></li>
+
+
+
+## links auf bilder
+
+*.jpg o. *.svg
+
+http://localhost/wordpress/wp-content/uploads/2019/04/bild.jpg
+
+http://localhost/wordpress/wp-content/uploads/2020/04/bild.jpg
+
+
+<figure>
+  <a href="http://localhost/wordpress/wp-content/uploads/2020/04/winter.jpg">
+  <img src="http://localhost/wordpress/wp-content/uploads/2020/04/winter.jpg" 
+    alt="Winter" width="300"></a>
+  <figcaption>Abb. : Winter</figcaption>
+</figure>
+
+<figure>
+  <a href="http://localhost/wordpress/wp-content/uploads/2020/04/logo.svg">
+  <img src="http://localhost/wordpress/wp-content/uploads/2020/04/logo.svg" 
+    alt="logo.svg" width="300"></a>
+  <figcaption>Abb. : logo.svg</figcaption>
+</figure>
+
+[caption id="attachment_3886" align="aligncenter" width="300"]
+<a href="http://localhost/wordpress/wp-content/uploads/2020/04/winter.jpg">
+  <img class="wp-image-3886 size-medium" 
+    src="http://localhost/wordpress/wp-content/uploads/2020/04/winter-300x174.jpg" 
+    alt="Wintersport" width="300"></a> 
+  Wintersport[/caption]
+
+[caption id="attachment_3885" align="aligncenter" width="300"]
+<a href="http://localhost/wordpress/wp-content/uploads/2020/04/logo.svg">
+  <img class="wp-image-3885 size-medium" 
+    src="http://localhost/wordpress/wp-content/uploads/2020/04/logo.svg" 
+    alt="Logo" width="300"></a> 
+  Logo[/caption]
+
+
+## Gallery
+
+Plugin: Unite Gallery Lite
+
+Shortcode:
+
+[unitegallery bmw] - bmw z4
+
+## tabellen
+
+Plugin: TablePress
+
+csv
+
+Shortcode:
+
+[table id=1 /]  - c-zahlensysteme.csv
+[table id=2 /]  - c-datentypen.csv
+[table id=3 /]  - schichtplan-sg.csv
+
+
+

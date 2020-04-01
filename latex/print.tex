@@ -1,0 +1,103 @@
+% ju 2-Mrz-20 print.tex
+\documentclass{scrbook} % <= Druckversion: "scrbook" / Bildschirmversion: "scrreprt"
+% document options
+\newcommand\bcor{12mm} % <= Bindungskorrektur fuer Druckversion
+\KOMAoptions{titlepage=firstiscover,open=right,headings=big,numbers=noenddot}
+\KOMAoptions{DIV=12,fontsize=12pt}
+\KOMAoptions{parskip=false,paper=A4,BCOR=\bcor} %
+\pdfcatalog{/PageLayout/TwoColumnRight} %
+
+
+\AtBeginDocument{\recalctypearea}
+\linespread{1.1}
+\widowpenalty10000
+\clubpenalty10000
+\tolerance1000
+
+\RequirePackage[automark]{scrlayer-scrpage}    % Define and manage page styles
+% headings
+\pagestyle{scrheadings}
+\automark[]{chapter}
+\automark*[section]{}
+
+% footnotes
+\counterwithout*{footnote}{chapter}
+
+% Metadaten einlesen
+\input{content/metadata}
+% Pakete
+\input{content/praeambel}
+% Literatur laden
+\bibliography{content/literatur}%
+
+\makeindex %Initialisieren
+
+% PDF/A stabiler, international akzeptierter ISO-Standard fuer die Langzeitarchivierung
+% Adobe Acrobat Pro DC / PDF-Standards / Preflight
+% Konformitaet mit PDF/A-1b pruefen / Pruefen und Korrigieren
+% PDF/A-1b-Konformitaet Optionen wichtig!
+%		pdftitle, pdfauthor, pdfsubject, pdfkeywords, pdfa
+\hypersetup{% Setup fuer PDF-/Hypertext-Generierung + Metadaten
+	pdftitle={\titel},
+	pdfauthor={\autor},
+	pdfsubject={\typ},
+	pdfkeywords={\schlagwoerter},
+	pdflang=de,
+	bookmarks=true,
+	pdfdisplaydoctitle=true,
+	colorlinks=true,
+	plainpages=false,
+	allcolors=black,
+	hypertexnames=false,
+	pdfpagelabels=true,
+	hyperindex=true,
+	unicode=true,
+	pdfcaptionwriter={\autor},
+	pdfcontactcity={\ort},
+	pdfcontactcountry={Deutschland},
+	pdfcontactregion={NRW},
+	pdfcontacturl={\website},
+	pdfmetalang={de},
+	pdftex=true,             % bitte nicht aendern!
+	hypertexnames=false,     % bitte nicht aendern!
+	pdfa=true,  % bitte nicht aendern! NEU: PDF/A-flag
+	breaklinks=true,%
+	bookmarksnumbered=true,
+	breaklinks=true
+}
+
+
+\begin{document}
+\title{\titel}% Thema
+\author{\autor}
+%\date{\today}
+%\date{2020/03/2}
+\version
+\maketitle
+
+
+% Introduction
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+\setcounter{tocdepth}{2}
+\tableofcontents
+%\listoffigures
+%\listoftables
+%\lstlistoflistings
+\newpage
+\pagenumbering{arabic}
+
+%-----------------------
+	% Kapitel
+	\chapter{\titel}
+	\input{inhalt}
+	
+%-----------------------
+
+% Index (Register)
+%\printindex 
+
+%\phantomsection\addcontentsline{toc}{chapter}{Literatur}
+\printbibliography% Verzeichnis drucken
+\end{document}

@@ -1,0 +1,83 @@
+% ju 2-Mrz-20 artikel.tex
+\documentclass[a4paper,12pt,fleqn]{scrartcl}% 
+\usepackage[margin=1in]{geometry}
+
+% Metadaten einlesen
+\input{content/metadata}
+% Pakete
+\input{content/praeambel}
+% Literatur laden
+\bibliography{content/literatur}%
+
+% Artikel
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lfoot{\textbf{\titel}}% Thema
+\rfoot{Seite \thepage}% Seite
+\lhead{\textbf{\leftmark}}
+\rhead{\textbf{\rightmark}}
+\cfoot{}
+\renewcommand{\footrulewidth}{0.8pt}
+\renewcommand{\headrulewidth}{0.8pt}
+\doublespacing
+\setlength{\parindent}{1cm}
+
+%% Kapitelueberschriften farbig
+\usepackage{sectsty}
+\chapterfont{\color{rot6}}
+\sectionfont{\color{rot6}}
+\subsectionfont{\color{rot6}}
+\subsubsectionfont{\color{rot6}}
+
+% PDF/A-1b-Konformitaet Optionen wichtig!
+%		pdftitle, pdfauthor, pdfsubject, pdfkeywords, pdfa	
+\hypersetup{% Setup fuer PDF-/Hypertext-Generierung + Metadaten
+	pdftitle={\titel},
+	pdfauthor={\autor},
+	pdfsubject={\typ},
+	pdfkeywords={\schlagwoerter},
+	pdflang=de,
+	bookmarks=true,
+	pdfdisplaydoctitle=true,
+	colorlinks=true,
+	plainpages=false,
+	%allcolors=black,
+	colorlinks=true,	   
+	linkcolor=blau5,		
+	filecolor=black,		
+	urlcolor=blau5,			
+	citecolor=black,	
+	hypertexnames=false,
+	pdfpagelabels=true,
+	hyperindex=true,
+	unicode=true,
+	pdfcaptionwriter={\autor},
+	pdfcontactcity={\ort},
+	pdfcontactcountry={Deutschland},
+	pdfcontactregion={NRW},
+	pdfcontacturl={\website},
+	pdfmetalang={de},
+	pdftex=true,             % bitte nicht aendern!
+	hypertexnames=false,     % bitte nicht aendern!
+	pdfa=true,  % bitte nicht aendern! NEU: PDF/A-flag
+	breaklinks=true,%
+	bookmarksnumbered=true,
+	breaklinks=true
+}
+
+\begin{document}
+\title{\titel}% Thema
+\author{\autor}
+%\date{\today}
+\date{2020/03/02}
+
+%\maketitle
+%\tableofcontents
+
+%---------------------
+	\input{inhalt}
+%---------------------
+
+%\phantomsection\addcontentsline{toc}{chapter}{Literatur}
+\printbibliography% Verzeichnis drucken
+\end{document}
