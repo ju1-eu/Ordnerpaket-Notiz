@@ -2,7 +2,7 @@
 	PowerShell Script 
 	update: 2-Apr-20
 	(c) 2020 Jan Unger 
-  web optimierte Fotos aus jpg:
+  web optimierte Fotos aus jpg o.png:
 	* quer: 1600x1200 
 	* hoch: 800x1200
 	* kontakt: 1920x1080 
@@ -34,9 +34,9 @@
 Clear-Host # cls
 
 $tmp = 'temp' # bildname anpassen
-#$aufloesungTex = '960'  # B5 = 728x516
-$aufloesung = '1600' # 1920x1080 1600x1100 
-$qualitaet = '82%'  # ImageMagik: 82% = Photoshop: 60%
+# B5 = 728x516
+$aufloesung = '960' # 1920x1080 1600x1200 960x 300x
+$qualitaet = '80%'  # ImageMagik: 82% = Photoshop: 60%
 $img_in = 'img_orig'
 $img_out = 'img_auto'
 $fallback = "fallback"
@@ -74,7 +74,7 @@ function imgTeX{
     #"+ pics umbenennen - Ordner-001.jpg"
     #exiftool -fileOrder datetimeoriginal '-fileName<${directory}%-.3nc.%le' -r -P $tmp/*
     
-    "+ pics umbenennen - Ordner-file.jpg"
+    "+ pics umbenennen - Ordner-file.jpg o. Ordner-file.png"
     exiftool -fileOrder datetimeoriginal '-fileName<${directory}-%f.%le' -r -P $tmp/*
 
     
@@ -94,7 +94,7 @@ function imgTeX{
 
     cd ../$fallback
 
-    "+ LaTeX - Bilder in pdf umwandeln"
+    "+ LaTeX - Bilder in pdf o. eps umwandeln"
     mogrify -path ../ -format eps *.jpg
     mogrify -path ../ -format eps *.png
     mogrify -path ../$fallback -format pdf *.jpg

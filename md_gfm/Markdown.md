@@ -101,9 +101,9 @@ Bild
 
 Bilder in eps o. pdf speichern, empfehlenswert für Latex.
 
-![Wintersport: pdf -&gt; svg sonst webp](images/winter.pdf)
+![Sport-Winter: pdf -&gt; svg sonst webp](images/Sport-Winter.pdf)
 
-    ![Wintersport](images/winter.pdf)
+    ![Sport-Winter](images/Sport-Winter.pdf)
 
 ![Logo: eps -&gt; svg sonst webp](images/logo.eps)
 

@@ -1,5 +1,16 @@
 # wordpress
 
+## web optimierte Fotos aus jpg:
+
+* quer: 1600x1200 
+* hoch: 800x1200
+* kontakt: 1920x1080 
+* footer: 1920x180
+* logo: 340x180
+* Icon: 512x512
+* Beitragsbild: 2560x1440
+* Verkaufsfoto: 5760x3840 bzw. Original
+
 ## links auf seiten
 
 http://localhost/wordpress
