@@ -1,8 +1,8 @@
 <#------------------------------------------------------ 
 	PowerShell Script 
-	update: 1-Apr-20
+	update: 2-Apr-20
 	(c) 2020 Jan Unger 
-  web optimierte Fotos:
+  web optimierte Fotos aus jpg:
 	* quer: 1600x1200 
 	* hoch: 800x1200
 	* kontakt: 1920x1080 
@@ -10,154 +10,125 @@
 	* logo: 340x180
 	* Icon: 512x512
 	* Beitragsbild: 2560x1440
-	* Verkaufsfoto: 5760x3840 bzw. Original
+  * Verkaufsfoto: 5760x3840 bzw. Original
+  
+  mogrify -filter Triangle 
+    -define filter:support=2 
+    -thumbnail 1600x1200
+    -unsharp 0.25x0.25+8+0.065 
+    -dither None 
+    -posterize 136 
+    -quality 82 
+    -define jpeg:fancy-upsampling=off 
+    -define png:compression-filter=5 
+    -define png:compression-level=9 
+    -define png:compression-strategy=1 
+    -define png:exclude-chunk=all 
+    -interlace none 
+    -colorspace sRGB 
+    -strip 
+    -path ../$fallback/ ./*.jpg
+
+
 ------------------------------------------------------#>
 Clear-Host # cls
 
-# variablen
 $tmp = 'temp' # bildname anpassen
-$aufloesungTex = '728x516'  # B5 = 728x516
-$aufloesungWeb = '1600x1200' # 1920x1080 1600x1100 
-$qualitaetWeb = '75%' # ImageMagik: 82% = Photoshop: 60%
-$img_orig = 'img_orig'
-$img_auto = 'img_auto'
+#$aufloesungTex = '960'  # B5 = 728x516
+$aufloesung = '1600' # 1920x1080 1600x1100 
+$qualitaet = '82%'  # ImageMagik: 82% = Photoshop: 60%
+$img_in = 'img_orig'
+$img_out = 'img_auto'
+$fallback = "fallback"
 
 # optimiert Fotos für Web und TeX
 ## Funktionsaufruf: imgTeX
 function imgTeX{
   # Usereingabe
-  "+++ Sind Bilder im Ordner '$img_orig' ?"
+  "+ Sind 'Bilder' im Ordner '$img_in' ?"
   $var = Read-Host 'Eingabe - [j/n]' 
   if($var -eq  "n"){# gleich
     ".\scripte\imgTeX.ps1 PS-Script wird beendet"
+    "mehrere Bilderordner möglich"
     exit
   }
   else{
-    "`n+++ Verzeichnis erstellen oder loeschen"
+    "`n+ Verzeichnis erstellen oder loeschen"
     # loescht ordner, wenn vorhanden, recursiv, schreibgeschützt, versteckt (unix)
-    if (test-path ./$img_auto) { remove-item ./$img_auto/* -force -recurse} 
+    if (test-path ./$img_out) { rm -r ./$img_out/* -force} 
 
 
     # ordner erstellen
-    md ./$img_auto/$tmp
-    md ./$img_auto/$aufloesungTex
+    md ./$img_out/$tmp
+    md ./$img_out/fallback
 
-    "`n+++ Kopie erstellen: $img_orig => $img_auto/$tmp"
-    cp -Recurse -Force ./$img_orig/* ./$img_auto/$tmp
+    "`n+ Kopie erstellen: $img_in => $img_out/$tmp"
+    cp -r  ./$img_in/* ./$img_out/$tmp -Force
 
-    cd ./$img_auto
-
-    "+++ files umbennen"
-    #cd $tmp
-    # Dateiendung
-    #ls -r | ren -NewName {$_.fullname -replace ".JPG", ".jpg"} -ea SilentlyContinue
-    #ls -r | ren -NewName {$_.fullname -replace ".jpeg", ".jpg"} -ea SilentlyContinue
-    # Leerzeichen
-    #ls -r | ren -NewName {$_.name -replace "_", "-"} -ea SilentlyContinue
-    #ls -r | ren -NewName {$_.name -replace " ", ""} -ea SilentlyContinue
-    # webserver
-    #ls -r | ren -NewName {$_.name -replace "-", "_"} -ea SilentlyContinue
-    # Umlaute
-    # ergaenzen
-    #cd ..
-
-    # Funktionen
-    # Funktion: Bildqualitaet optimieren
-    # Funktionsaufruf: imgOpti $out/ $qualitaet $in/*
-    function imgOpti() {
-      param ( 
-        [string] $out, 
-        [string] $aufloesung,
-        [string] $qualitaet, 
-        [string] $in
-      )  
-      #mogrify -path $out/ -resize 300 $in/*
-      # Einstellungen mit Optimierung
-      # automatisch drehen: -auto-orient
-      # Exif-Infos aus dem Bild entfernen = -strip
-      mogrify -path $out/ -filter Triangle -define filter:support=2 -auto-orient  -thumbnail  $aufloesung  -unsharp 0.25x0.25+8+0.065  -dither None -posterize 136 -quality $qualitaet -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB  -strip $in/*
-     }
+    cd $img_out
 
 
-    # Funktion: Bildaufloesung aendern
-    # Funktionsaufruf: imgResize $out/ $aufloesung $in/*
-    function imgResize() {
-      param ( 
-        [string] $out, 
-        [string] $aufloesung, 
-        [string] $in
-      )  
-      #mogrify -path $out/ -resize 300 $in/*
-      # Einstellungen mit Optimierung
-      mogrify -path $out/ -thumbnail $aufloesung $in/*
-    }
+    # exiftool
+    # https://www.benjamin-rosemann.de/blog/bilder-in-unterordnern-durchnumerieren-mit-exiftool.html
+    
+    #"+ pics umbenennen - Ordner-001.jpg"
+    #exiftool -fileOrder datetimeoriginal '-fileName<${directory}%-.3nc.%le' -r -P $tmp/*
+    
+    "+ pics umbenennen - Ordner-file.jpg"
+    exiftool -fileOrder datetimeoriginal '-fileName<${directory}-%f.%le' -r -P $tmp/*
 
-      "+++ pics umbenennen - Ordner-001.jpg"
-      #exiftool -P -fileOrder datetimeoriginal '-fileName<${directory}%-.3nc.%le' $tmp/* -r
-      #"+++ pics umbenennen - Ordner-filename-001.jpg"
-      #exiftool -P -fileOrder datetimeoriginal '-fileName<${directory}-%f%-.3nc.%e' $tmp/* -r
-      
+    
+    # 2019/2019-09-20-Ordner-file.jpg
+    #1) exiftool -fileOrder datetimeoriginal '-fileName<${directory}-%f.%le' -r -P $tmp/*
+    #2) exiftool -fileOrder datetimeoriginal '-FileName<${DateTimeOriginal}-%f.%le' -d '%Y/%Y-%m-%d' -r -P $tmp/*
 
-      ### Web und Latex
-      # Bildqualitaet optimieren
-      # Funktionsaufruf: imgOpti $out/ $qualitaet $in/*
-      "+++ Web - Bildaufloesung $aufloesungWeb Bildqualitaet  $qualitaetWeb"
-      imgOpti ./ $aufloesungWeb $qualitaetWeb $tmp
 
-      cd ..
+    cd $tmp
 
-      # Bildaufloesung aendern
-      # Funktionsaufruf: imgResize $out/ $aufloesung $in/*
-      "+++ LaTeX - Bildaufloesung $aufloesungTex"
-      #imgResize "$img_auto/$aufloesung" $aufloesung $img_auto
-      imgResize ./$img_auto/$aufloesungTex $aufloesungTex $img_auto
+    # jpg -> qualität u. auflösung
+    mogrify -filter Triangle -define filter:support=2 -thumbnail $aufloesung -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality $qualitaet -define jpeg:fancy-upsampling=off  -interlace none -colorspace sRGB -strip -path ../$fallback/ ./*.jpg
+ 
+    # png -> qualität
+    mogrify -strip +set date:create +set date:modify -define png:color-type=3 -depth 8 +dither -colors 256 -type Palette -format png -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -quality $qualitaet -path ../$fallback/ ./*.png
+    
 
-      cd $img_auto/
+    cd ../$fallback
 
-      "+++ LaTeX - Bilder in pdf umwandeln"
-      mogrify -format pdf $aufloesungTex/*.jpg 
-      mogrify -format pdf $aufloesungTex/*.png
-      cp $aufloesungTex/*.pdf ./
-
-      # Komprimiert den Inhalt eines Verzeichnisses
-      #ls $ordner | Compress-Archive -Update -dest "$archiv/$ordner.zip"
-
-      # Kopie loeschen
-      rm $tmp -force -recurse
-      rm $aufloesungTex -force -recurse
-
+    "+ LaTeX - Bilder in pdf umwandeln"
+    mogrify -path ../ -format eps *.jpg
+    mogrify -path ../ -format eps *.png
+    mogrify -path ../$fallback -format pdf *.jpg
+    mogrify -path ../$fallback -format pdf *.png
 
     # WebP
-    "+++ jpg & png in webp Format konvertieren"
-    #"+++ Wasserzeichen"
+    "+ jpg in webp Format konvertieren"
     $filter = "*.jpg"
-    [array]$array = ls ./ $filter 
+    [array]$array = ls $filter 
     # array auslesen
     for($n=0; $n -lt $array.length; $n++){   # kleiner
-        #$name = "$($array[$n])"              # file.jpg
+        #$name = "$($array[$n])"             # file.jpg
         $basename = "$($array.BaseName[$n])" # file
         #"$n - $name"
-        # lossless = true, false codiert das Bild verlustfrei.
-        convert "$basename.jpg" -quality 75 -define webp:lossless=true "$basename.webp"
-        #convert "./$basename.jpg" -quality 75 "./$basename.webp"
-        # wasserzeichen
-        #composite -watermark 15% -geometry +5+5 -gravity SouthEast "../images/logo.svg" "./$basename.webp" "./$basename-Wasserzeichen.webp"
-        #composite -watermark 15% -geometry +5+5 -gravity SouthEast "../images/logo.svg" "./$basename.jpg" "./$basename-Wasserzeichen.jpg"
+        # lossless = false codiert das Bild verlustfrei
+        convert "./$basename.jpg" -quality 50 -define webp:lossless=false "../$basename.webp"
     }
+    
+    "+ png in webp Format konvertieren"
     $filter = "*.png"
-    [array]$array = ls ./ $filter 
+    [array]$array = ls $filter 
     # array auslesen
     for($n=0; $n -lt $array.length; $n++){   # kleiner
-        #$name = "$($array[$n])"              # file.jpg
+        #$name = "$($array[$n])"             # file.jpg
         $basename = "$($array.BaseName[$n])" # file
         #"$n - $name"
-        # lossless = true, false codiert das Bild verlustfrei.
-        #convert "$basename.jpg" -quality 50 -define webp:lossless=true "$basename.webp"
-        convert "./$basename.png" -quality 75 "./$basename.webp"
+        # lossless = false codiert das Bild verlustfrei
+        convert "./$basename.png" -quality 50 -define webp:lossless=true "../$basename.webp"
     }
 
     cd ..
+
   }
+
 }
 
 # Funktionsaufruf
@@ -166,4 +137,8 @@ imgTeX
 "#---------------------------------------"
 "Fotos wurden optimiert fuer Web und TeX."
 # Kopie
-cp ./img_auto/*  ./images/
+rm -r $tmp/ -Force
+cp -r *  ../images/ -Force
+  
+
+cd ..

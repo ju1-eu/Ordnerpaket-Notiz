@@ -88,7 +88,6 @@ if(!(test-path md_gfm/))  { md md_gfm/ -force}
 
 # bilder optimieren
 .\scripte\imgTeX.ps1
-.\scripte\png-eps-TeX.ps1
 
 # Alle Abb. in Latex speichern: images/abb.tex
 .\scripte\abb-in-eps-TeX.ps1
