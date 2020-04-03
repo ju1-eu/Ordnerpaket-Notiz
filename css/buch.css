@@ -1,213 +1,173 @@
 /* für HTML-Version */
-
-
-
 body {
-    counter-reset: figcnt;
-    counter-reset: seccnt;
-    counter-reset: chapcnt;
-    margin: auto;
-    padding-right: 1em;
-    padding-left: 1em;
-    max-width: 65em;
-    color: black;
-    font-family: sans-serif;
-    font-size: 100%;
-    line-height: 140%;
-    color: #333; 
+  counter-reset: figcnt;
+  counter-reset: seccnt;
+  counter-reset: chapcnt;
+  margin: auto;
+  padding-right: 1em;
+  padding-left: 1em;
+  max-width: 65em;
+  color: black;
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 140%;
+  /*color: #333;*/
 }
-
-
 /* Code-Blöcke */
 pre {
-    border: 1px dotted gray;
-    background-color: #f6f6f6;
-    color: #1111111;
-    padding: 0.5em;
-    margin-left: 0em;
-    font-size: 100%;
+  border: 1px dotted gray;
+  background-color: #f6f6f6;
+  color: #1111111;
+  padding: 0.5em;
+  margin-left: 0em;
+  font-size: 100%;
 }
-
 code {
-    font-family: monospace;
+  font-family: monospace;
 }
-
-
 /* Pandoc-Beispiele hervorheben */
 .sample {
-    border: 1px dotted gray;
-    background-color: #f2f2ff;
-    color: #1111111;
-    padding: 0.5em;
-    margin-left: 0em;
+  border: 1px dotted gray;
+  background-color: #f2f2ff;
+  color: #1111111;
+  padding: 0.5em;
+  margin-left: 0em;
 }
 .sample p {
   margin: 0 0 0.5em 0;
 }
-
 /* Blockquotes (Hinweise) */
-
 blockquote {
-    font-style: italic;
-    /* background:#f8f8f8; */
-    border-left:12px solid #f2f2f2; 
-    margin:0;
-    padding:.3em 10px;
-    font-size: 95%;
-
+  font-style: italic;
+  /* background:#f8f8f8; */
+  border-left: 12px solid #f2f2f2;
+  margin: 0;
+  padding: .3em 10px;
+  font-size: 95%;
 }
 blockquote p {
-    display:inline;
+  display: inline;
 }
-
 blockquote strong {
-    font-weight: 550;
+  font-weight: 550;
 }
 blockquote .uri {
-    font-style: normal;
+  font-style: normal;
 }
-
 /* Listen */
-
 ul {
-    margin-left: 0;
-    padding-left: 3em;
+  margin-left: 0;
+  padding-left: 3em;
 }
-
 /* Überschriften */
 h1:not(.title) {
-    counter-increment: chapcnt;
-    counter-reset: seccnt;
-    font-size: 200%;
-    line-height: 160%;
-    margin-top: 6ex;
-    margin-bottom: 2ex;
-    color: #191980; 	     
+  counter-increment: chapcnt;
+  counter-reset: seccnt;
+  font-size: 200%;
+  line-height: 160%;
+  margin-top: 6ex;
+  margin-bottom: 2ex;
+  color: #191980;
 }
-
 h1::before {
-  content: "Kapitel " counter(chapcnt) '\A';
+  content: "Kapitel "counter(chapcnt) '\A';
   white-space: pre-wrap;
   font-weight: normal;
 }
-h1.unnumbered::before { 
+h1.unnumbered::before {
   content: "";
 }
-
 .chapcntreset {
-    counter-reset: chapcnt;
+  counter-reset: chapcnt;
 }
-
 h2 {
-    counter-increment: seccnt;
-    margin-top: 4ex;
-    margin-bottom: 2ex;
-    font-size: 120%;
-    color: #191980; 	     
+  counter-increment: seccnt;
+  margin-top: 4ex;
+  margin-bottom: 2ex;
+  font-size: 120%;
+  color: #191980;
 }
-
 h2::before {
-  content: counter(chapcnt) "." counter(seccnt) "\00a0\00a0\00a0";
+  content: counter(chapcnt) "."counter(seccnt) "\00a0\00a0\00a0";
 }
-
-
-
-
 h3 {
-    margin-top: 3ex;
-    font-size: 100%;
+  margin-top: 3ex;
+  font-size: 100%;
 }
-
 /* Überschriften im header-Block */
-h1.title, h2.author, h3.date { 
+h1.title, h2.author, h3.date {
   text-align: center;
 }
-h1.title::before, h2.author::before { 
+h1.title::before, h2.author::before {
   content: "";
 }
-
-
 /* Definition tables */
 dt code {
-        font-weight: bold;
+  font-weight: bold;
 }
 dd p {
-        margin-top: 0;
+  margin-top: 0;
 }
-
 /* Tabellen */
 table {
-    border-collapse: collapse;
-    border-width: 2px 0 2px 0;
-    border-color: #888;
-    border-style: solid;
+  border-collapse: collapse;
+  border-width: 2px 0 2px 0;
+  border-color: #888;
+  border-style: solid;
 }
-
 th {
-    padding: 0.5ex 1ex;
-    border-width: 2px 0;
-    border-color: #888;
-    border-style: solid;
-    background-color: #e0e0e0;
+  padding: 0.5ex 1ex;
+  border-width: 2px 0;
+  border-color: #888;
+  border-style: solid;
+  background-color: #e0e0e0;
 }
-
 td {
-    padding: 0.4ex 1ex;
-    vertical-align: top;
+  padding: 0.4ex 1ex;
+  vertical-align: top;
 }
-
 tr:nth-child(even) {
-    background-color: #f8f8f8;
+  background-color: #f8f8f8;
 }
 tr:nth-child(odd) {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
-
 /* Tabellenüberschrift */
 caption {
   padding-top: 2px;
   margin-top: 1px;
   margin-bottom: 1ex;
-  caption-side:bottom;
+  caption-side: bottom;
   text-align: left;
   font-size: 90%;
   font-style: italic;
   /* color: #ee2200;  */
 }
-
-
 /* Links */
 a {
   text-decoration: none;
-  color: #7a5ada; 
+  color: #7a5ada;
 }
-
 /* Bilder samt Beschriftung */
 figure {
   align: left;
   margin-left: 0;
   margin-top: 3ex;
 }
-
 figure img {
-    max-width: 95%;
+  max-width: 95%;
 }
 figure figcaption {
   font-size: 90%;
-  font-style:italic;
+  font-style: italic;
 }
-
-
-
-
 /* Sonstiges */
 .smallcaps {
-    font-variant: small-caps;
-    font-size: 100%;
+  font-variant: small-caps;
+  font-size: 100%;
 }
-
 .keyb {
-    color: #622;    
-    font-family: monospace;
-    font-size: 115%;
+  color: #622;
+  font-family: monospace;
+  font-size: 115%;
 }

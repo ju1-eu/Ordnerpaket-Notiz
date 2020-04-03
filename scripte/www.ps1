@@ -30,6 +30,21 @@ $latex = "latex"
 
 # kopie
 cp ./$latex/*.pdf  ./$www/$pdfs/ 
+
+# www/
+robocopy css/ www/css/ /mir /e /NFL /NDL /NJH /TEE 
+robocopy code/ www/code/ /mir /e /NFL /NDL /NJH /TEE
+
+robocopy images/ www/images/ /mir /e /NFL /NDL /NJH /TEE 
+if(test-path www/images/){
+  rm -r www/images/*.eps -force
+  rm -r www/images/*.pdf -force
+  rm -r www/images/fallback -force
+}
+
+robocopy md/ www/md/ /mir /e /NFL /NDL /NJH /TEE 
+cp *.html  www/ 
+cp *cms.html www/cms/ 
 if(test-path $www/Start.html){rm -r $www/Start.html -force} 
 
 # html
@@ -129,86 +144,10 @@ function suchenErsetzenHTML{
   }
 }
 
-function suchenErsetzenCMS{
-  $filter = "html"
-  #$www = "www"
-  [array]$array = ls "./$www/$cms/*.$filter"
-	#$array 
-  # array auslesen
-  for($n=0; $n -lt $array.length; $n++){   # kleiner
-    #$name = "$($array[$n])"              # file.tex
-    $basename = "$($array.BaseName[$n])" # file
-    "--------------"
-    "$n - $basename"
-    "--------------"
-    
-    # <embed src=`"img
-    $suchen = "<embed src=`"img" # regulaerer Ausdruck
-    $ersetzen = "<img class=`"scaled`" src=`"img"
-    # regulaerer Ausdruck
-    (Get-Content "./$www/$cms/$basename.$filter") | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content "./$www/$cms/$basename.$filter"
-    
-    # alt u. Bildgröße
-    $suchen = "/><figcaption" # regulaerer Ausdruck
-    $ersetzen = "alt=`"Bildname`" class=`"scaled`" /><figcaption"
-    # regulaerer Ausdruck
-    (Get-Content "./$www/$cms/$basename.$filter") | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content "./$www/$cms/$basename.$filter"
-    
-    # <img
-    $suchen = "<embed" # regulaerer Ausdruck
-    $ersetzen = "<img"
-    # regulaerer Ausdruck
-    (Get-Content "./$www/$cms/$basename.$filter") | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content "./$www/$cms/$basename.$filter"
-    
-
-    # $www/$img/logo.svg o. logo.webp
-    # if(test-path *.svg){pdf in svg o. eps in svg}
-    [array]$array_2 = ls "./$www/$img/*.svg" 
-    # array auslesen
-    for($m=0; $m -lt $array_2.length; $m++){   # kleiner
-      #$name_2 = "$($array_2[$m])"             # file.svg
-      $basename_2 = "$($array_2.BaseName[$m])" # file
-      "$m - $basename_2"
-      if(test-path "./$www/$img/${basename_2}.svg"){
-        # bildformat: eps -> svg
-        $suchen = "${basename_2}.eps" # regulaerer Ausdruck
-        $ersetzen = "${basename_2}.svg"
-        # regulaerer Ausdruck
-        (Get-Content "./$www/$cms/$basename.$filter") | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content "./$www/$cms/$basename.$filter"
-        # bildformat: pdf -> svg
-        $suchen = "${basename_2}.pdf" # regulaerer Ausdruck
-        $ersetzen = "${basename_2}.svg"
-        # regulaerer Ausdruck
-        (Get-Content "./$www/$cms/$basename.$filter") | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content "./$www/$cms/$basename.$filter"
-      }
-    }
-
-    # if(test-path *.webp){pdf in webp o. eps in webp}
-    [array]$array_3 = ls "./$www/$img/*.webp"
-    # array auslesen
-    for($k=0; $k -lt $array_3.length; $k++){   # kleiner
-      #$name_3 = "$($array_3[$k])"             # file.webp
-      $basename_3 = "$($array_3.BaseName[$k])" # file
-      "$k - $basename_3"
-      if(test-path "./$www/$img/${basename_3}.webp"){
-        # bildformat: pdf -> webp
-        $suchen = "${basename_3}.pdf" # regulaerer Ausdruck
-        $ersetzen = "${basename_3}.webp"
-        # regulaerer Ausdruck
-        (Get-Content "./$www/$cms/$basename.$filter") | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content "./$www/$cms/$basename.$filter"
-        # bildformat: eps -> webp
-        $suchen = "${basename_3}.eps" # regulaerer Ausdruck
-        $ersetzen = "${basename_3}.webp"
-        # regulaerer Ausdruck
-        (Get-Content "./$www/$cms/$basename.$filter") | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content "./$www/$cms/$basename.$filter" 
-      }
-    }
-  }
-}
   
 ## Funktionsaufruf: 
 suchenErsetzenHTML
-suchenErsetzenCMS
+
 
 
 ### Funktionsaufruf: htmlFiles $fileTitel $fileHTML $fileTyp $filter

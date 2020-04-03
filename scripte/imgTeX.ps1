@@ -4,13 +4,15 @@
 	(c) 2020 Jan Unger 
   web optimierte Fotos aus jpg o.png:
 	* quer: 1600x1200 
-	* hoch: 800x1200
-	* kontakt: 1920x1080 
-	* footer: 1920x180
-	* logo: 340x180
+  * hoch: 800x1200
+  * 1600x
+  * 960x
+	* Kontakt: 1920x1080 
+	* Footer: 1920x180
+	* Logo: 340x180
 	* Icon: 512x512
 	* Beitragsbild: 2560x1440
-  * Verkaufsfoto: 5760x3840 bzw. Original
+  * Verkaufsfoto: 5760x3840 bzw. Original ACHTUNG: Auflösung wird nicht verändert!
   
   mogrify -filter Triangle 
     -define filter:support=2 
@@ -34,12 +36,21 @@
 Clear-Host # cls
 
 $tmp = 'temp' # bildname anpassen
-# B5 = 728x516
-$aufloesung = '960' # 1920x1080 1600x1200 960x 300x
+$aufloesung = '1600x' # 1920x1080 1600x1200 960x 300x
 $qualitaet = '80%'  # ImageMagik: 82% = Photoshop: 60%
 $img_in = 'img_orig'
 $img_out = 'img_auto'
 $fallback = "fallback"
+$orginal = "Orginalfoto"  # ACHTUNG: Auflösung wird nicht verändert!
+$beitrag = "Beitragsbild"
+$kontakt = "Kontakt"
+$footer = "Footer"
+$logo = "Logo"
+$icon = "Icon"
+$bildgroesse_1 = "1600x"
+$bildgroesse_2 = "960x"   # latex
+$bildgroesse_3 = "300x"
+
 
 # optimiert Fotos für Web und TeX
 ## Funktionsaufruf: imgTeX
@@ -55,18 +66,25 @@ function imgTeX{
   else{
     "`n+ Verzeichnis erstellen oder loeschen"
     # loescht ordner, wenn vorhanden, recursiv, schreibgeschützt, versteckt (unix)
-    if (test-path ./$img_out) { rm -r ./$img_out/* -force} 
-
-
-    # ordner erstellen
-    md ./$img_out/$tmp
-    md ./$img_out/fallback
-
-    "`n+ Kopie erstellen: $img_in => $img_out/$tmp"
-    cp -r  ./$img_in/* ./$img_out/$tmp -Force
+    if (test-path ./$img_out) { rm -r ./$img_out/* -force}   
 
     cd $img_out
+    # ordner erstellen
+    if(!(test-path $tmp/)){           md $tmp/ -force} 
+    if(!(test-path $fallback/)){      md $fallback/ -force}  
+    if(!(test-path $orginal/)){       md $orginal/ -force} 
+    if(!(test-path $beitrag/)){       md $beitrag/ -force} 
+    if(!(test-path $kontakt/)){       md $kontakt/ -force} 
+    if(!(test-path $footer/)){        md $footer/ -force} 
+    if(!(test-path $logo/)){          md $logo/ -force} 
+    if(!(test-path $icon/)){          md $icon/ -force} 
+    if(!(test-path $bildgroesse_1/)){ md $bildgroesse_1/ -force} 
+    if(!(test-path $bildgroesse_2/)){ md $bildgroesse_2/ -force} 
+    if(!(test-path $bildgroesse_3/)){ md $bildgroesse_3/ -force} 
 
+    "`n+ Kopie erstellen: $img_in => $img_out/$tmp"
+    cp -r  ../$img_in/* $tmp -Force
+    cp -r  ../$img_in/* $orginal -Force
 
     # exiftool
     # https://www.benjamin-rosemann.de/blog/bilder-in-unterordnern-durchnumerieren-mit-exiftool.html
@@ -83,22 +101,36 @@ function imgTeX{
     #2) exiftool -fileOrder datetimeoriginal '-FileName<${DateTimeOriginal}-%f.%le' -d '%Y/%Y-%m-%d' -r -P $tmp/*
 
 
-    cd $tmp
+    # jpg -> qualität
+    mogrify -filter Triangle -define filter:support=2 -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality $qualitaet -define jpeg:fancy-upsampling=off  -interlace none -colorspace sRGB -strip -path ./$fallback/ $tmp/*.jpg
+    # ACHTUNG: jpg -> $aufloesung siehe oben!
+    mogrify -thumbnail $aufloesung -path ./ ./$fallback/*.jpg
+    # auflösung 1600x 
+    mogrify -thumbnail 1600x -path ./$bildgroesse_1/ ./$fallback/*.jpg
+    # auflösung 960x latex
+    mogrify -thumbnail 960x -path ./$bildgroesse_2/ ./$fallback/*.jpg
+    # auflösung 300x
+    mogrify -thumbnail 300x -path ./$bildgroesse_3/ ./$fallback/*.jpg
+    # Logo: 340x180
+    mogrify -thumbnail 340x180 -path ./$logo/ ./$fallback/*.jpg
+    # Icon: 512x512
+    mogrify -thumbnail 512x512 -path ./$icon/ ./$fallback/*.jpg
+    # Kontakt: 1920x1080
+    mogrify -thumbnail 1920x1080 -path ./$kontakt/ ./$fallback/*.jpg
+    # Beitragsbild: 2560x1440
+    mogrify -thumbnail 2560x1440 -path ./$beitrag/ ./$fallback/*.jpg
 
-    # jpg -> qualität u. auflösung
-    mogrify -filter Triangle -define filter:support=2 -thumbnail $aufloesung -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality $qualitaet -define jpeg:fancy-upsampling=off  -interlace none -colorspace sRGB -strip -path ../$fallback/ ./*.jpg
- 
     # png -> qualität
-    mogrify -strip +set date:create +set date:modify -define png:color-type=3 -depth 8 +dither -colors 256 -type Palette -format png -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -quality $qualitaet -path ../$fallback/ ./*.png
+    # ACHTUNG: Auflösung wird nicht verändert!
+    mogrify -strip +set date:create +set date:modify -define png:color-type=3 -depth 8 +dither -colors 256 -type Palette -format png -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -quality $qualitaet -path ./ $tmp/*.png
     
 
-    cd ../$fallback
-
     "+ LaTeX - Bilder in pdf o. eps umwandeln"
-    mogrify -path ../ -format eps *.jpg
-    mogrify -path ../ -format eps *.png
-    mogrify -path ../$fallback -format pdf *.jpg
-    mogrify -path ../$fallback -format pdf *.png
+    mogrify -path ./ -format eps ./$bildgroesse_2/*.jpg
+    mogrify -path ./ -format eps *.png
+    mogrify -path ./$fallback -format pdf ./$bildgroesse_2/*.jpg
+    mogrify -path ./$fallback -format pdf *.png
+
 
     # WebP
     "+ jpg in webp Format konvertieren"
@@ -110,7 +142,7 @@ function imgTeX{
         $basename = "$($array.BaseName[$n])" # file
         #"$n - $name"
         # lossless = false codiert das Bild verlustfrei
-        convert "./$basename.jpg" -quality 50 -define webp:lossless=false "../$basename.webp"
+        convert "./$basename.jpg" -quality 50 -define webp:lossless=false "./$basename.webp"
     }
     
     "+ png in webp Format konvertieren"
@@ -122,11 +154,8 @@ function imgTeX{
         $basename = "$($array.BaseName[$n])" # file
         #"$n - $name"
         # lossless = false codiert das Bild verlustfrei
-        convert "./$basename.png" -quality 50 -define webp:lossless=true "../$basename.webp"
+        convert "./$basename.png" -quality 50 -define webp:lossless=true "./$basename.webp"
     }
-
-    cd ..
-
   }
 
 }
@@ -138,7 +167,9 @@ imgTeX
 "Fotos wurden optimiert fuer Web und TeX."
 # Kopie
 rm -r $tmp/ -Force
+rm -r $fallback/*jpg -Force
 cp -r *  ../images/ -Force
-  
+cd ..  
+# loescht ordner, wenn vorhanden, recursiv, schreibgeschützt, versteckt (unix)
+if (test-path ./$img_out) { rm -r ./$img_out/* -force}   
 
-cd ..

@@ -109,6 +109,9 @@ if(!(test-path md_gfm/))  { md md_gfm/ -force}
 # start.html
 .\scripte\www.ps1
 
+# cms - wordpress
+.\scripte\cms.ps1
+
 # git
 .\scripte\git.ps1
 

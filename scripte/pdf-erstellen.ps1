@@ -14,7 +14,10 @@ $timestamp = Get-Date -Format 'yyyy' # 2020
 $text = "% Inhalt `n% (c) $timestamp $autor"
 
 # latex/
-robocopy images/ latex/images/ /mir /e /NFL /NDL /NJH /TEE 
+robocopy images/fallback/ latex/images/fallback/ /mir /e /NFL /NDL /NJH /TEE 
+cp -r images/*.eps latex/images/ -force
+cp -r images/*.pdf latex/images/ -force
+
 robocopy code/ latex/code/ /mir /e /NFL /NDL /NJH /TEE 
 robocopy md/ latex/md/ /mir /e /NFL /NDL /NJH /TEE
 cp *.tex latex/tex/  
@@ -24,13 +27,7 @@ cp *.tex latex/tex/
 #cp *beamer.pdf  latex/
 #if(test-path ./*beamer.pdf){rm ./*beamer.pdf -force -recurse}
 
-# www/
-robocopy css/ www/css/ /mir /e /NFL /NDL /NJH /TEE 
-robocopy code/ www/code/ /mir /e /NFL /NDL /NJH /TEE
-robocopy images/ www/images/ /mir /e /NFL /NDL /NJH /TEE 
-robocopy md/ www/md/ /mir /e /NFL /NDL /NJH /TEE 
-cp *.html  www/ 
-cp *cms.html www/cms/ 
+
 
 # Funktion: erstellt inhalt.tex
 # Aufruf:   inhaltTeX
