@@ -58,8 +58,9 @@ function versionieren{
 }
 
 # Usereingabe
-"+++ Variablen anpassen '$thema' ?"
-"+++ Git ausfuehren ?"
+"`n------------------"
+"+ Git ausfuehren ?"
+"------------------"
 $var = Read-Host 'Eingabe - [j/n]' 
 if($var -eq  "n"){# gleich
   "PS-Script .\scripte\git.ps1 wird beendet"

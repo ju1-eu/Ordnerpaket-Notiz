@@ -44,23 +44,22 @@ Erste Schritte
     git clone https://github.com/ju1-eu/Ordnerpaket-Notiz.git notiz
     cd notiz
 
-"Readme.txt" **lesen**
+	**Readme.txt** lesen
 
-**Thema** im Script `projekt.ps1` anpassen u. im Ordner
+    **Thema** anpassen und Speicherpfade und Git!
+    * 'projekt.ps1 '
+    * scripte/'git.ps1', 'backup.ps1', 'cms.ps1', 'pdf-erstellen.ps1'
 
-`scripte/"git.ps1" u. "backup.ps1"`
+    **LaTeX** anpassen
+    * latex/content/'metadata.tex', 'literatur.bib'
+    * latex/content/'zusammenfassung.tex' -> latex/'book.tex' 
+    * latex/Grafiken/'titelbild.pdf'
 
-`latex/content/"metadata.tex", "zusammenfassung.tex", "literatur.bib"`
+    **Notizen** in Markdown erstellen: min. 2x! 'md/*.md'
 
-`latex/Grafiken/"titelbild.pdf"`
+    **PS-Script** ausführen: PS >_ '.\projekt.ps1'
 
-**Notizen** in Markdown erstellen: min. 2x! `md/*.md`
-
-    # PS-Script ausführen 
-    PS >_ projekt.ps1
-
-    # Projekt - Website öffnen
-    Start.html
+    **Projekt - Website** öffnen: 'Start.html'
 
 Git
 ---

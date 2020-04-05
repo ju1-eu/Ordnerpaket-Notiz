@@ -34,11 +34,12 @@ cp ./$latex/*.pdf  ./$www/$pdfs/
 # www/
 robocopy css/ www/css/ /mir /e /NFL /NDL /NJH /TEE 
 robocopy code/ www/code/ /mir /e /NFL /NDL /NJH /TEE
-
 robocopy images/ www/images/ /mir /e /NFL /NDL /NJH /TEE 
-if(test-path www/images/){
+
+if(test-path www/images/fallback){
   rm -r www/images/*.eps -force
   rm -r www/images/*.pdf -force
+  rm -r www/images/*.tex -force
   rm -r www/images/fallback -force
 }
 

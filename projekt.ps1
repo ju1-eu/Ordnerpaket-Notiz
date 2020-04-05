@@ -16,8 +16,37 @@ $thema = "Ordnerpaket-Notiz" # anpassen
 $USB = "E:\repos\notizenWin10"
 $RPI = "\\RPI4\nas\repos\notizenWin10"
 #---------------------------------------
+# imgTex.ps1
+$orginal = "Orginalfoto"  
+$beitrag = "Beitragsbild"
+$kontakt = "Kontakt"
+$footer = "Footer"
+$logo = "Logo"
+$icon = "Icon"
 
-"Projekt neu erstellen? .git loeschen?"
+# Info
+$info = "**Readme.txt** lesen
+
+**Thema** anpassen und Speicherpfade und Git!
+* 'projekt.ps1 '
+* scripte/'git.ps1', 'backup.ps1', 'cms.ps1', 'pdf-erstellen.ps1'
+
+**LaTeX** anpassen
+* latex/content/'metadata.tex', 'literatur.bib'
+* latex/content/'zusammenfassung.tex' -> latex/'book.tex' 
+* latex/Grafiken/'titelbild.pdf'
+
+**Notizen** in Markdown erstellen: min. 2x! 'md/*.md'
+
+**PS-Script** ausführen: PS >_ '.\projekt.ps1'
+
+**Projekt - Website** öffnen: 'Start.html'"
+
+
+$info
+"`n---------------------------------------"
+"+ Projekt neu erstellen? .git loeschen?"
+"---------------------------------------"
 $var = Read-Host 'Eingabe - [j/n]' 
 if($var -eq  "n"){# gleich
   "Viel Spaß"
@@ -34,7 +63,16 @@ else{
 		if(test-path latex/code){ rm -r latex/code/ -force} 
 		if(test-path www/)     { rm -r www/ -force} 
 		if(test-path md_gfm/)  { rm -r md_gfm/ -force} 
-		
+
+		"wenn Ordner löschen"
+		if(test-path images/$orginal/){       rm -r images/$orginal/ -force} 
+		if(test-path images/$beitrag/){       rm -r images/$beitrag/ -force} 
+		if(test-path images/$kontakt/){       rm -r images/$kontakt/ -force} 
+		if(test-path images/$footer/){        rm -r images/$footer/ -force} 
+		if(test-path images/$logo/){          rm -r images/$logo/ -force} 
+		if(test-path images/$icon/){          rm -r images/$icon/ -force} 
+		if(test-path images/$aufloesungWeb/){ rm -r images/$aufloesungWeb/ -force} 
+
 		if(test-path $HD/${thema}.git) { rm -r $HD/${thema}.git -force} 
 		if(test-path $USB/${thema}.git){ rm -r $USB/${thema}.git -force} 
 		if(test-path $RPI/${thema}.git){ rm -r $RPI/${thema}.git -force} 

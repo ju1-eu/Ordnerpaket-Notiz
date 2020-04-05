@@ -8,6 +8,9 @@
 Clear-Host # cls
 
 # variablen
+#---------------------------------------
+$thema  = "Ordnerpaket-Notiz" # anpassen
+#---------------------------------------
 $autor  = "Jan Unger"
 $inhalt = "inhalt.tex"
 $timestamp = Get-Date -Format 'yyyy' # 2020
@@ -60,7 +63,9 @@ latexmk -pdf artikel.tex
 
 # LaTeX - pdflatex
 # Usereingabe
-"+++ Book & Print erstellen ?"
+"`n--------------------------"
+"+ Book & Print erstellen ?"
+"--------------------------"
 $var = Read-Host 'Eingabe - [j/n]' 
 if($var -eq  "n"){# gleich
   "PS-Script .\scripte\pdf-erstellen.ps1 wird beendet"
@@ -80,6 +85,10 @@ else{
   bibtex   print
   pdflatex print.tex
   pdflatex print.tex
+
+  # kopie - cms
+  cp book.pdf $thema-book.pdf
+
 }
 
 cd ..

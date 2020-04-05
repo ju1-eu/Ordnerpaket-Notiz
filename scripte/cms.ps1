@@ -8,7 +8,7 @@ Clear-Host # cls
 
 #---------------------------------------
 $thema  = "Ordnerpaket-Notiz" # anpassen
-# img/ ?
+# 
 # Bildformate: svg, jpg, png
 #---------------------------------------
 
@@ -101,17 +101,17 @@ function suchenErsetzenCMS{
 suchenErsetzenCMS
 
 
-"+ Links-auf-Bilder.md"
-$fileHTML =  "Links-auf-Bilder.md"
+"+ Links-auf-Bilder.txt"
+$fileHTML =  "Links-auf-Bilder.txt"
 $textHTML = "# Thema - $thema
 
 ## Links auf Bilder
 
-lokaler Server: 
-http://localhost/wordpress/wp-content/uploads/$timestamp/bild.jpg
+Pfad - lokaler Server: 
+http://localhost/wordpress/wp-content/uploads/$timestamp/
 
-Webhoster:
-https://bw-ju.de/wp-content/uploads/$timestamp/bild.jpg
+Pfad - Webhoster:
+https://bw-ju.de/wp-content/uploads/$timestamp/
 
 *.svg o. *.png o. *.jpg
 
@@ -217,14 +217,14 @@ $textHTML | Add-Content ./$www/$cms/$fileHTML
 
 
 
-"+ Links-auf-Seiten.md"
-$fileHTML =  "Links-auf-Seiten.md"
+"+ Links-auf-Seiten.txt"
+$fileHTML =  "Links-auf-Seiten.txt"
 $textHTML = "# Thema - $thema
 
 ## Links auf Seiten
 
-* lokaler Server: http://localhost/wordpress
-* Webhoster: https://bw-ju.de
+* Pfad - lokaler Server: http://localhost/wordpress
+* Pfad - Webhoster:      https://bw-ju.de
 
 ## Erstelle Seiten in Wordpress
 
@@ -233,7 +233,7 @@ $textHTML = "# Thema - $thema
 # erstelle datei 
 $textHTML | Set-Content ./$www/$cms/$fileHTML 
 
-# Seiten
+# webseiten
 $filter = "html"
 [array]$arrayHTML = ls "./$www/$cms/*.$filter" 
 # array auslesen
@@ -283,7 +283,34 @@ $textHTML | Add-Content ./$www/$cms/$fileHTML
 # suchen und ersetzen
 (Get-content ./$www/$cms/$fileHTML -Encoding UTF8) -replace '-cms','' | Out-File ./$www/$cms/$fileHTML -Encoding UTF8
 
+
+
+"+ Bilderordner-images.txt"
+$fileHTML =  "Bilderordner-images.txt"
+$textHTML = "# Thema - $thema
+
+## Bilderordner - images
+
+Web optimierte Fotos aus jpg o.png:
+
+* quer: 1600x1200 
+* hoch: 800x1200
+* 1600x
+* 960x
+* Kontakt: 1920x1080 
+* Footer: 1920x180
+* Logo: 340x180
+* Icon: 512x512
+* Beitragsbild: 2560x1440
+* Verkaufsfoto: Original ACHTUNG: Auflösung wird nicht verändert!
+"
+
+# erstelle datei 
+$textHTML | Set-Content ./$www/$cms/$fileHTML 
+
+
 "CMS - Wordpress => 
-Links-auf-Bilder.md und Links-auf-Seiten.md 
-erstellt."
+* Links-auf-Bilder.txt
+* Links-auf-Seiten.txt
+* Bilderordner-images.txt  erstellt."
 
