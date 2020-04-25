@@ -1,6 +1,6 @@
 <#------------------------------------------------------ 
 	PowerShell Script 
-	update: 30-Mrz-20
+	update: 25-Apr-20
 	(c) 2020 Jan Unger 
   Quellcode in LaTeX
 ------------------------------------------------------#>
@@ -9,7 +9,8 @@ Clear-Host # cls
 # variablen
 $save = "code"    
 $file = "code.tex" 
-$filter = "c" # anpassen Codeformate: c, cpp, sh, py, tex 
+$filter = "c"       # anpassen Codeformate: c, cpp, sh, py, tex 
+$language = "C" # anpassen Sprache: C, TeX, Bash, Python
 
 cd $save
 
@@ -23,7 +24,7 @@ for($n=0; $n -lt $array.length; $n++){# kleiner
   }
   $temp += "Programm >>$basename.$filter<< (vgl. Quelltext~\ref{code:$basename}).% Referenz
   % Code
-\lstinputlisting[language=C,% C, TeX, Bash, Python
+\lstinputlisting[language=$language,% C, TeX, Bash, Python
   caption={$basename.$filter},% Name
   label={code:$basename}% Ref.
 ]{$save/$basename.$filter}% file

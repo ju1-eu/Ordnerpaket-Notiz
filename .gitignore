@@ -1,8 +1,8 @@
 !.gitattributes
 !.gitconfig
 !.gitignore
+!img_orig/
 img_auto/
-img_orig/
 word/
 www/
 latex/code/
