@@ -16,6 +16,7 @@ $RPI = "\\RPI4\nas\repos\notizenWin10"
 
 $log_file  = "git_log.txt"
 $timestamp = Get-Date -Format 'yMMdd' # 200331
+#$TIMESTAMP = date -f "d-MMM-y" # 1-Mai-20
 
 $LESEZ_USB = "backupUSB"
 $LESEZ_RPI = "backupRPI"

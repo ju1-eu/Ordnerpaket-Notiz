@@ -18,7 +18,8 @@ $cms = "cms"
 $img = "images"
 $jahr = Get-Date -Format 'yyyy' # 2020
 $monat = Get-Date -Format 'MM'  # 04
-$timestamp = "$jahr/$monat"      
+$timestamp = "$jahr/$monat"  
+#$TIMESTAMP = date -f "d-MMM-y" # 1-Mai-20    
 
 function suchenErsetzenCMS{
   $filter = "html"

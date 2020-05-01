@@ -14,6 +14,7 @@ $thema  = "Ordnerpaket-Notiz" # anpassen
 $autor  = "Jan Unger"
 $inhalt = "inhalt.tex"
 $timestamp = Get-Date -Format 'yyyy' # 2020
+#$TIMESTAMP = date -f "d-MMM-y" # 1-Mai-20
 $text = "% Inhalt `n% (c) $timestamp $autor"
 
 # latex/
