@@ -9,7 +9,7 @@
 Clear-Host # cls
 
 #---------------------------------------
-$thema = "Ordnerpaket-Notiz"  # anpassen
+$thema = "Beispiel-Notiz"  # anpassen
 $USB = "E:\repos\notizenWin10"
 $RPI = "\\RPI4\nas\repos\notizenWin10"
 #---------------------------------------
@@ -37,7 +37,7 @@ function versionieren{
 #>
 
   if(!(test-path $USB)){
-    "Fehler: '$USB' nicht vorhanden!"
+    "HINWEIS: '$USB' nicht vorhanden!"
   }
   else{
     git push --all $LESEZ_USB # sichern
@@ -45,7 +45,7 @@ function versionieren{
   }
 
   if(!(test-path $RPI)){
-    "Fehler: '$RPI' nicht vorhanden!"
+    "HINWEIS: '$RPI' nicht vorhanden!"
   }
   else{
     git push --all $LESEZ_RPI # sichern

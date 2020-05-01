@@ -14,7 +14,7 @@
 	* Beitragsbild: 2560x1440
   * Verkaufsfoto: Original ACHTUNG: Auflösung wird nicht verändert!
   
-  mogrify -filter Triangle 
+  magick mogrify -filter Triangle 
     -define filter:support=2 
     -thumbnail 1600x1200
     -unsharp 0.25x0.25+8+0.065 
@@ -100,15 +100,15 @@ function imgTeX{
 
 
     # jpg -> qualität
-    mogrify -filter Triangle -define filter:support=2 -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality $qualitaet -define jpeg:fancy-upsampling=off  -interlace none -colorspace sRGB -strip -path ./$fallback/ $tmp/*.jpg
+    magick mogrify -filter Triangle -define filter:support=2 -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality $qualitaet -define jpeg:fancy-upsampling=off  -interlace none -colorspace sRGB -strip -path ./$fallback/ $tmp/*.jpg
     # ACHTUNG: jpg -> Web: $aufloesungWeb siehe oben!
-    mogrify -thumbnail $aufloesungWeb -path ./ ./$fallback/*.jpg
+    magick mogrify -thumbnail $aufloesungWeb -path ./ ./$fallback/*.jpg
     # ACHTUNG: jpg -> Latex: $aufloesungLatex: eps - pdf
-    mogrify -thumbnail $aufloesungLatex -path ./$latex/ ./$fallback/*.jpg
+    magick mogrify -thumbnail $aufloesungLatex -path ./$latex/ ./$fallback/*.jpg
 
     # png -> qualität
     # ACHTUNG: Auflösung wird nicht verändert!
-    mogrify -strip +set date:create +set date:modify -define png:color-type=3 -depth 8 +dither -colors 256 -type Palette -format png -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -quality $qualitaet -path ./ $tmp/*.png
+    magick mogrify -strip +set date:create +set date:modify -define png:color-type=3 -depth 8 +dither -colors 256 -type Palette -format png -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -quality $qualitaet -path ./ $tmp/*.png
     
 
     # neue Website - fotograf
@@ -139,15 +139,15 @@ function imgTeX{
       # kopie
       cp -r  ../$img_in/* $orginal -Force
       # auflösung 1600x 
-      mogrify -thumbnail 1600x -path ./$aufloesungWeb/ ./$fallback/*.jpg
+      magick mogrify -thumbnail 1600x -path ./$aufloesungWeb/ ./$fallback/*.jpg
       # Logo: 340x180
-      mogrify -thumbnail 340x180 -path ./$logo/ ./$fallback/*.jpg
+      magick mogrify -thumbnail 340x180 -path ./$logo/ ./$fallback/*.jpg
       # Icon: 512x512
-      mogrify -thumbnail 512x512 -path ./$icon/ ./$fallback/*.jpg
+      magick mogrify -thumbnail 512x512 -path ./$icon/ ./$fallback/*.jpg
       # Kontakt: 1920x1080
-      mogrify -thumbnail 1920x1080 -path ./$kontakt/ ./$fallback/*.jpg
+      magick mogrify -thumbnail 1920x1080 -path ./$kontakt/ ./$fallback/*.jpg
       # Beitragsbild: 2560x1440
-      mogrify -thumbnail 2560x1440 -path ./$beitrag/ ./$fallback/*.jpg
+      magick mogrify -thumbnail 2560x1440 -path ./$beitrag/ ./$fallback/*.jpg
     }
 
 
@@ -155,11 +155,11 @@ function imgTeX{
     "+ LaTeX - Bilder in pdf u. eps umwandeln"
     # $aufloesungLatex  
     # eps
-    mogrify -path ./ -format eps ./$latex/*.jpg
-    mogrify -path ./ -format eps *.png
+    magick mogrify -path ./ -format eps ./$latex/*.jpg
+    magick mogrify -path ./ -format eps *.png
     # pdf
-    mogrify -path ./$fallback -format pdf ./$latex/*.jpg
-    mogrify -path ./$fallback -format pdf *.png
+    magick mogrify -path ./$fallback -format pdf ./$latex/*.jpg
+    magick mogrify -path ./$fallback -format pdf *.png
 
 
     # WebP
