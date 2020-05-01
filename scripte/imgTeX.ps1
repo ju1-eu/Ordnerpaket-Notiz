@@ -172,7 +172,7 @@ function imgTeX{
         $basename = "$($array.BaseName[$n])" # file
         #"$n - $name"
         # lossless = false codiert das Bild verlustfrei
-        convert "./$basename.jpg" -quality 50 -define webp:lossless=false "./$basename.webp"
+        magick convert "./$basename.jpg" -quality 50 -define webp:lossless=false "./$basename.webp"
     }
     
     "+ png in webp Format konvertieren"
@@ -184,7 +184,7 @@ function imgTeX{
         $basename = "$($array.BaseName[$n])" # file
         #"$n - $name"
         # lossless = false codiert das Bild verlustfrei
-        convert "./$basename.png" -quality 50 -define webp:lossless=true "./$basename.webp"
+        magick convert "./$basename.png" -quality 50 -define webp:lossless=true "./$basename.webp"
     }
   }
 

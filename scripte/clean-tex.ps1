@@ -46,10 +46,6 @@ cd latex/
 aufraeumenTeX
 cd ..
 
-cd www/
-if(test-path ./*cms.html){rm *cms.html -force}
-cd ..
 
-if(test-path ./*.html){rm ./*.html -force} 
 if(test-path ./*.docx){rm ./*.docx -force} 
 if(test-path ./*.tex){rm  ./*.tex -force} 

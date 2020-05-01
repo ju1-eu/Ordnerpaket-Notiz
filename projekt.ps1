@@ -141,14 +141,14 @@ if(!(test-path md_gfm/))  { md md_gfm/ -force}
 # pdf erstellen
 .\scripte\pdf-erstellen.ps1
 
-# aufräumen
-.\scripte\clean-tex.ps1
-
 # start.html
 .\scripte\www.ps1
 
 # cms - wordpress
 .\scripte\cms.ps1
+
+# aufräumen
+.\scripte\clean-tex.ps1
 
 # git
 .\scripte\git.ps1

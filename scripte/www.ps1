@@ -46,7 +46,10 @@ if(test-path www/images/fallback){
 robocopy md/ www/md/ /mir /e /NFL /NDL /NJH /TEE 
 cp *.html  www/ 
 cp *cms.html www/cms/ 
+
+if(test-path ./*.html){rm ./*.html -force} 
 if(test-path $www/Start.html){rm -r $www/Start.html -force} 
+if(test-path $www/*cms.html){rm $www/*cms.html -force}
 
 # html
 function suchenErsetzenHTML{

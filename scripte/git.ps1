@@ -9,7 +9,7 @@
 Clear-Host # cls
 
 #---------------------------------------
-$thema = "Beispiel-Notiz"  # anpassen
+$thema = "Ordnerpaket-Notiz"  # anpassen
 $USB = "E:\repos\notizenWin10"
 $RPI = "\\RPI4\nas\repos\notizenWin10"
 #---------------------------------------

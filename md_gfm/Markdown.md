@@ -107,8 +107,6 @@ Für das Web webp, png, jpg o. svg.
 
     ![Sport-Winter](images/Sport-Winter.eps)
 
-![Logo: pdf](images/logo.pdf)
-
 Tabelle
 -------
 
