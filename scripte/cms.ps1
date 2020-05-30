@@ -125,7 +125,7 @@ Bilder hinzufügen.
 $textHTML | Set-Content ./$www/$cms/$fileHTML  
 
 # alle Bilder
-[array]$arrayAbb = ls "./$www/$img/*.*" -Force 
+[array]$arrayAbb = ls "./$www/$img/*" -Force 
 # array auslesen
 for($n=0; $n -lt $arrayAbb.length; $n++){ # kleiner
   $name = "$($arrayAbb[$n])"             # file.tex
@@ -135,17 +135,12 @@ for($n=0; $n -lt $arrayAbb.length; $n++){ # kleiner
   # schreibe in datei hinzu
   $textHTML | Add-Content ./$www/$cms/$fileHTML 
 }
-$textHTML = "`n~~~"
+
+# leerzeile
+$textHTML = "
+"
 # schreibe in datei hinzu
 $textHTML | Add-Content ./$www/$cms/$fileHTML 
-
-# suchen und ersetzen
-# pwd
-# regulaerer Ausdruck
-$suchen = "C:\\daten\\tex\\Ordnerpaket-Notiz\\www\\images\\"
-$ersetzen = ""
-(Get-Content ./$www/$cms/$fileHTML) | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content ./$www/$cms/$fileHTML
-
 
 
 # svg
@@ -168,7 +163,7 @@ for($n=0; $n -lt $arrayAbb.length; $n++){ # kleiner
 }
 
 # schreibe in datei hinzu
-$textHTML | Add-Content ./$www/$cms/$fileHTML 
+#$textHTML | Add-Content ./$www/$cms/$fileHTML 
 
 # jpg
 $filter = "jpg" # Bildformate: svg, jpg, png
@@ -190,7 +185,7 @@ for($n=0; $n -lt $arrayAbb_2.length; $n++){ # kleiner
 }
 
 # schreibe in datei hinzu
-$textHTML | Add-Content ./$www/$cms/$fileHTML 
+#$textHTML | Add-Content ./$www/$cms/$fileHTML 
 
 # png
 $filter = "png" # Bildformate: svg, jpg, png
@@ -210,11 +205,6 @@ for($n=0; $n -lt $arrayAbb_3.length; $n++){ # kleiner
   # schreibe in datei hinzu
   $textHTML | Add-Content ./$www/$cms/$fileHTML 
 }
-
-$textHTML = "~~~"
-
-# schreibe in datei hinzu
-$textHTML | Add-Content ./$www/$cms/$fileHTML 
 
 
 
