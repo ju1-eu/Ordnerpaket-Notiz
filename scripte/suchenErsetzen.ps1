@@ -9,7 +9,7 @@ Clear-Host # cls
 #----------------------------------------------
 # anpassen: Latex / lstlisting ?
 # Latex-Code:  HTML5, Python, Bash, C, C++, TeX
-$language = "C"    
+$language = "C++"    
 #----------------------------------------------
 
 # suchen und ersetzen in latex
@@ -79,11 +79,13 @@ $ersetzen = "% Tabelle
 %(vgl.~\ref{tab:}).% Referenz
 \begin{table}[ht]% hier: htbp    
 \centering
+%\resizebox{\textwidth}{!}{%
 \begin{tabular}{"
 (Get-Content $name) | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content $name
 #
 $suchen = "\\end\{longtable\}" # regulaerer Ausdruck
 $ersetzen = "\end{tabular}
+%} % resizebox_ENDE
 %\caption{} \label{tab:}% Tabellenname
 \end{table}"
 (Get-Content $name) | Foreach-Object {$_ -replace "$suchen", "$ersetzen"} | Set-Content $name
