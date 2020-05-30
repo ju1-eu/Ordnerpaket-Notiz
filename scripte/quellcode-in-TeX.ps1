@@ -9,8 +9,8 @@ Clear-Host # cls
 # variablen
 $save = "code"    
 $file = "code.tex" 
-$filter = "c"       # anpassen Codeformate: c, cpp, sh, py, tex 
-$language = "C" # anpassen Sprache: C, TeX, Bash, Python
+$filter = "cpp"       # anpassen Codeformate: c, cpp, sh, py, tex 
+$language = "C++" # anpassen Sprache: C, TeX, Bash, Python
 
 cd $save
 
@@ -22,13 +22,15 @@ for($n=0; $n -lt $array.length; $n++){# kleiner
   if($n -eq 0){# anpassen
     $temp = "\section{Quellcode}\label{quellcode} `n`n" # leer  
   }
-  $temp += "Programm >>$basename.$filter<< (vgl. Quelltext~\ref{code:$basename}).% Referenz
+  $temp += "\subsection{$basename.$filter}\label{$basename-$filter} 
+  
+Programm >>$basename.$filter<< (vgl. Quelltext~\ref{code:$basename}).% Referenz
   % Code
 \lstinputlisting[language=$language,% C, TeX, Bash, Python
   caption={$basename.$filter},% Name
   label={code:$basename}% Ref.
 ]{$save/$basename.$filter}% file
-  `n`n"
+  `n \newpage `n`n"
   }
 
 # schreibe in datei
